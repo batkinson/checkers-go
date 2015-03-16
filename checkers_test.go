@@ -389,6 +389,22 @@ func TestUpdateTurnKingJumpContinuation(t *testing.T) {
 	}
 }
 
+func TestMustJump(t *testing.T) {
+	game := New()
+	for loc := range game.Pieces {
+		delete(game.Pieces, loc)
+	}
+	noJmpPos, jmpPos := Pos{1, 2}, Pos{3, 2}
+	jumpedPos := Pos{4, 3}
+	dstPos := Pos{0, 3}
+	game.Pieces[noJmpPos], game.Pieces[jmpPos] = Piece{BLACK_PLAYER, false}, Piece{BLACK_PLAYER, false}
+	game.Pieces[jumpedPos] = Piece{RED_PLAYER, false}
+	capture, err := game.Move(noJmpPos, dstPos)
+	if err == nil || game.Turn == RED_PLAYER || capture != NO_POS {
+		t.Error("should not allow non-jump when a jump is possible")
+	}
+}
+
 func TestString(t *testing.T) {
 	game := New()
 	expected := "*b*b*b*b|b*b*b*b*|*b*b*b*b|********|********|r*r*r*r*|*r*r*r*r|r*r*r*r*"

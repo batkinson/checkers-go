@@ -171,7 +171,7 @@ func (game *Game) ValidMove(src, dst Pos) bool {
 	}
 	piece := game.Pieces[src]
 	if (!piece.King && Moves[piece.Player][src][dst]) || (piece.King && KingMoves[src][dst]) {
-		return true
+		return !game.playerHasJump(piece.Player)
 	}
 	return game.ValidJump(src, dst)
 }
@@ -255,10 +255,17 @@ func (game *Game) movePossibleFrom(src Pos) bool {
 
 func (game *Game) playerHasMove(player Player) bool {
 	for loc, piece := range game.Pieces {
-		if piece.Player == player {
-			if game.movePossibleFrom(loc) || game.jumpPossibleFrom(loc) {
-				return true
-			}
+		if piece.Player == player && (game.movePossibleFrom(loc) || game.jumpPossibleFrom(loc)) {
+			return true
+		}
+	}
+	return false
+}
+
+func (game *Game) playerHasJump(player Player) bool {
+	for loc, piece := range game.Pieces {
+		if piece.Player == player && game.jumpPossibleFrom(loc) {
+			return true
 		}
 	}
 	return false
