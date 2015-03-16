@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/batkinson/checkers"
+	"github.com/batkinson/checkers-go"
 	"log"
 	"math/rand"
 	"net"
