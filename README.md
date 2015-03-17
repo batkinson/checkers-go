@@ -12,3 +12,18 @@ To run this program, you'll need:
 
   * A working Go environment
 
+## Installing
+
+To install the server, simply run the following:
+
+```
+go install github.com/batkinson/checkers-go/checkers-server
+```
+
+## Running
+
+After installing the server, you should be able to run it:
+
+```
+checkers-server
+```
